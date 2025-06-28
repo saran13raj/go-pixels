@@ -9,7 +9,7 @@ import (
 
 func main() {
 
-	imagePath := "/Users/saran13raj/Desktop/workspace/saran13raj/go-pixels/image.png"
+	imagePath := "tmp/image.png"
 
 	if len(imagePath) < 2 {
 		fmt.Println("gopixels: Invalid image path")
