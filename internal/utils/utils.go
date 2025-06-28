@@ -203,7 +203,7 @@ func RenderImageFullcellGrayscale(img *image.Gray, threshold int) string {
 			} else if enhanced > 0.25 {
 				output += "░░" // Light shade
 			} else if enhanced > 0.05 {
-				output += "··" // Use middle dots for very subtle details
+				output += " " // Use single space for very subtle details
 			} else {
 				output += "  " // Empty
 			}
