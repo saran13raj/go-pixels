@@ -105,7 +105,7 @@ func RenderImageHalfcell(img image.Image, defaultColor string) string {
 }
 
 // renders a grayscale image using halfcell approach
-func RenderImageHalfcellGrayscale(img *image.Gray, threshold int) string {
+func RenderImageHalfcellGrayscale(img *image.Gray) string {
 	bounds := img.Bounds()
 	width, height := bounds.Max.X, bounds.Max.Y
 	var output string
@@ -180,7 +180,7 @@ func RenderImageFullcell(img image.Image, defaultColor string) string {
 }
 
 // renders a grayscale image using fullcell approach
-func RenderImageFullcellGrayscale(img *image.Gray, threshold int) string {
+func RenderImageFullcellGrayscale(img *image.Gray) string {
 	bounds := img.Bounds()
 	width, height := bounds.Max.X, bounds.Max.Y
 	var output string

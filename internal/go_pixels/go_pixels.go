@@ -5,47 +5,50 @@ import (
 	"image"
 
 	"go-pixels/internal/utils"
-
-	"github.com/charmbracelet/lipgloss"
 )
 
-type PixelRenderer struct {
-	Width      int
-	Height     int
-	Brightness int
-	Style      lipgloss.Style
-}
-
-func NewPixelRenderer(width, height, brightness int, style lipgloss.Style) *PixelRenderer {
-	if width <= 0 {
-		width = 80 // default terminal width
-	}
-	if height <= 0 {
-		height = 24 // default terminal height
-	}
-	if brightness <= 0 {
-		brightness = 128 // middle brightness threshold
-	}
-	return &PixelRenderer{
-		Width:      width,
-		Height:     height,
-		Brightness: brightness,
-		Style:      style,
-	}
-}
-
-// image to string
-func (pr *PixelRenderer) FromImagePath(path string, options map[string]string) (string, error) {
+// FromImagePath converts an image to string representation
+func FromImagePath(path string, width, height int, options map[string]string) (string, error) {
 	img, err := utils.LoadImage(path)
 	if err != nil {
 		return "", fmt.Errorf("gopixels failed to load image: %v", err)
+	}
+
+	// Get image dimensions for aspect ratio calculation
+	bounds := img.Bounds()
+	imgWidth := bounds.Dx()
+	imgHeight := bounds.Dy()
+	aspectRatio := float64(imgWidth) / float64(imgHeight)
+
+	// Set defaults based on terminal size and image aspect ratio
+	terminalWidth := 80  // default terminal width
+	terminalHeight := 24 // default terminal height
+
+	if width <= 0 || height <= 0 {
+		// Calculate aspect ratio with respect to terminal dimensions
+		if width <= 0 && height <= 0 {
+			// Both unspecified, use terminal size maintaining aspect ratio
+			targetWidth := terminalWidth
+			targetHeight := int(float64(targetWidth) / aspectRatio)
+			if targetHeight > terminalHeight {
+				targetHeight = terminalHeight
+				targetWidth = int(float64(targetHeight) * aspectRatio)
+			}
+			width = targetWidth
+			height = targetHeight
+		} else if width <= 0 {
+			// Width unspecified, calculate from height maintaining aspect ratio
+			width = int(float64(height) * aspectRatio)
+		} else if height <= 0 {
+			// Height unspecified, calculate from width maintaining aspect ratio
+			height = int(float64(width) / aspectRatio)
+		}
 	}
 
 	// Parse options
 	renderType := "halfcell" // default to halfcell like Python library
 	useColor := true
 	defaultColor := ""
-
 	if options != nil {
 		if val, ok := options["type"]; ok {
 			switch val {
@@ -67,27 +70,25 @@ func (pr *PixelRenderer) FromImagePath(path string, options map[string]string) (
 	switch renderType {
 	case "halfcell":
 		// For halfcell, resize to full width but ensure even height
-		targetHeight := pr.Height
+		targetHeight := height
 		if targetHeight%2 != 0 {
 			targetHeight++
 		}
-		resized = utils.ResizeImage(img, pr.Width, targetHeight)
+		resized = utils.ResizeImage(img, width, targetHeight)
 		if useColor {
 			output = utils.RenderImageHalfcell(resized, defaultColor)
 		} else {
 			gray := utils.ToGrayscale(resized)
-			output = utils.RenderImageHalfcellGrayscale(gray, pr.Brightness)
+			output = utils.RenderImageHalfcellGrayscale(gray)
 		}
-
 	case "fullcell":
-		resized = utils.ResizeImage(img, pr.Width, pr.Height)
+		resized = utils.ResizeImage(img, width, height)
 		if useColor {
 			output = utils.RenderImageFullcell(resized, defaultColor)
 		} else {
 			gray := utils.ToGrayscale(resized)
-			output = utils.RenderImageFullcellGrayscale(gray, pr.Brightness)
+			output = utils.RenderImageFullcellGrayscale(gray)
 		}
-
 	default:
 		return "", fmt.Errorf("unsupported render type: %s", renderType)
 	}
