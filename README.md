@@ -2,6 +2,10 @@
 
 A Go library for rendering pixel images directly in the terminal using Unicode block characters and ANSI color codes.
 
+<p align="center">
+<img width="700" src="example.png" />
+</p>
+
 ## Features
 
 - 📸 Load images from file paths

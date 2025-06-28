@@ -82,7 +82,7 @@ func FromImagePath(path string, width, height int, renderType string, useColor b
 			output = utils.RenderImageFullcellGrayscale(gray)
 		}
 	default:
-		return "", fmt.Errorf("unsupported render type: %s", renderType)
+		return "", fmt.Errorf("unsupported render type: %s (use 'halfcell' or 'fullcell')", renderType)
 	}
 
 	return output, nil
