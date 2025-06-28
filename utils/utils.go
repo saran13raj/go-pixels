@@ -99,7 +99,7 @@ func RenderImageHalfcell(img image.Image, defaultColor string) string {
 	}
 
 	for y := 0; y < height; y += 2 {
-		for x := 0; x < width; x++ {
+		for x := range width {
 			// Upper pixel (background color)
 			r1, g1, b1, a1 := img.At(x, y).RGBA()
 			// Lower pixel (foreground color)
@@ -146,7 +146,7 @@ func RenderImageHalfcellGrayscale(img *image.Gray) string {
 	}
 
 	for y := 0; y < height; y += 2 {
-		for x := 0; x < width; x++ {
+		for x := range width {
 			// upper := img.GrayAt(x, y).Y
 			lower := img.GrayAt(x, y+1).Y
 
