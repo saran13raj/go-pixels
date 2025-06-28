@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"image"
 	"math"
+	"net/http"
 	"os"
 
 	"image/color"
@@ -13,6 +14,17 @@ import (
 	"golang.org/x/image/draw"
 )
 
+var allowedTypes = map[string]bool{
+	"image/jpeg": true,
+	"image/jpg":  true,
+	"image/png":  true,
+	"image/gif":  true,
+	"image/bmp":  true,
+	"image/webp": true,
+	"image/heic": true,
+	"image/heif": true,
+}
+
 // loads and decodes an image from a file path.
 func LoadImage(path string) (image.Image, error) {
 	file, err := os.Open(path)
@@ -20,6 +32,24 @@ func LoadImage(path string) (image.Image, error) {
 		return nil, err
 	}
 	defer file.Close()
+
+	// Read first 512 bytes to detect content type
+	buff := make([]byte, 512)
+	n, err := file.Read(buff)
+	if err != nil {
+		return nil, err
+	}
+
+	filetype := http.DetectContentType(buff[:n])
+	if !allowedTypes[filetype] {
+		return nil, fmt.Errorf("unsupported file type: %s", filetype)
+	}
+
+	// Reset file pointer to beginning before decoding
+	_, err = file.Seek(0, 0)
+	if err != nil {
+		return nil, err
+	}
 
 	img, _, err := image.Decode(file)
 	if err != nil {

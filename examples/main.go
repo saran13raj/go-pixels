@@ -23,7 +23,7 @@ func main() {
 		"color": "true",
 	})
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "gopixels error: %v\n", err)
+		fmt.Fprintf(os.Stderr, "error: %v\n", err)
 		os.Exit(1)
 	}
 	fmt.Println(output)
@@ -35,7 +35,7 @@ func main() {
 		"color": "true",
 	})
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "gopixels error: %v\n", err)
+		fmt.Fprintf(os.Stderr, "error: %v\n", err)
 		os.Exit(1)
 	}
 	fmt.Println(output)
@@ -47,7 +47,7 @@ func main() {
 		"color": "false",
 	})
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "gopixels error: %v\n", err)
+		fmt.Fprintf(os.Stderr, "error: %v\n", err)
 		os.Exit(1)
 	}
 	fmt.Println(output)
@@ -59,7 +59,7 @@ func main() {
 		"color": "false",
 	})
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "gopixels error: %v\n", err)
+		fmt.Fprintf(os.Stderr, "error: %v\n", err)
 		os.Exit(1)
 	}
 	fmt.Println(output)
