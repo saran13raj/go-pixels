@@ -9,7 +9,7 @@ import (
 )
 
 // FromImagePath converts an image to string representation
-func FromImagePath(path string, width, height int, options map[string]string) (string, error) {
+func FromImagePath(path string, width, height int, renderType string, useColor bool) (string, error) {
 	img, err := utils.LoadImage(path)
 	if err != nil {
 		return "", fmt.Errorf("gopixels failed to load image: %v", err)
@@ -46,24 +46,10 @@ func FromImagePath(path string, width, height int, options map[string]string) (s
 		}
 	}
 
-	// Parse options
-	renderType := "halfcell" // default to halfcell like Python library
-	useColor := true
-	defaultColor := ""
-	if options != nil {
-		if val, ok := options["type"]; ok {
-			switch val {
-			case "halfcell", "fullcell", "braille", "blocks":
-				renderType = val
-			}
-		}
-		if val, ok := options["color"]; ok {
-			useColor = val == "true"
-		}
-		if val, ok := options["default_color"]; ok {
-			defaultColor = val
-		}
+	if renderType == "" {
+		renderType = "halfcell"
 	}
+	defaultColor := "" // TODO: pass in color to render
 
 	var output string
 	var resized image.Image

@@ -93,7 +93,7 @@ func RenderImageHalfcell(img image.Image, defaultColor string) string {
 	width, height := bounds.Max.X, bounds.Max.Y
 	var output string
 
-	// Ensure even height (like Python code)
+	// Ensure even height
 	if height%2 != 0 {
 		height--
 	}
