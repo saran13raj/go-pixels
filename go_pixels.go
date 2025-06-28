@@ -5,7 +5,7 @@ import (
 	"image"
 	"strings"
 
-	"go-pixels/internal/utils"
+	"go-pixels/utils"
 )
 
 // FromImagePath converts an image to string representation

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	gopixels "go-pixels/internal/go_pixels"
+	gopixels "github.com/saran13raj/go-pixels"
 )
 
 func main() {
@@ -18,7 +18,7 @@ func main() {
 
 	// Example 1: Halfcell rendering with color
 	fmt.Println("=== Halfcell Rendering (Color) ===")
-	output, err := gopixels.FromImagePath(imagePath, 0, 0, map[string]string{
+	output, err := gopixels.FromImagePath(imagePath, 50, 55, map[string]string{
 		"type":  "halfcell",
 		"color": "true",
 	})
@@ -54,7 +54,7 @@ func main() {
 
 	// Example 2: Fullcell rendering with greyscale
 	fmt.Println("\n=== Fullcell Rendering (Greyscale) ===")
-	output, err = gopixels.FromImagePath(imagePath, 0, 0, map[string]string{
+	output, err = gopixels.FromImagePath(imagePath, 40, 45, map[string]string{
 		"type":  "fullcell",
 		"color": "false",
 	})
