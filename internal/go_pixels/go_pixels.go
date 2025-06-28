@@ -3,6 +3,7 @@ package gopixels
 import (
 	"fmt"
 	"image"
+	"strings"
 
 	"go-pixels/internal/utils"
 )
@@ -69,18 +70,23 @@ func FromImagePath(path string, width, height int, options map[string]string) (s
 
 	switch renderType {
 	case "halfcell":
-		// For halfcell, resize to full width but ensure even height
-		targetHeight := height
-		if targetHeight%2 != 0 {
-			targetHeight++
-		}
-		resized = utils.ResizeImage(img, width, targetHeight)
+		// For halfcell, use the specified height directly without adjustment
+		resized = utils.ResizeImage(img, width, height)
 		if useColor {
 			output = utils.RenderImageHalfcell(resized, defaultColor)
 		} else {
 			gray := utils.ToGrayscale(resized)
 			output = utils.RenderImageHalfcellGrayscale(gray)
 		}
+		// Remove empty lines
+		lines := strings.Split(output, "\n")
+		var cleanLines []string
+		for _, line := range lines {
+			if strings.TrimSpace(line) != "" {
+				cleanLines = append(cleanLines, line)
+			}
+		}
+		output = strings.Join(cleanLines, "\n")
 	case "fullcell":
 		resized = utils.ResizeImage(img, width, height)
 		if useColor {
