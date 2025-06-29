@@ -101,7 +101,7 @@ output, err := gopixels.FromImagePath("logo.png", 0, 0, "fullcell", true)
 output, err := gopixels.FromImagePath("image.png", 60, 30, "halfcell", false)
 ```
 
-## [Complete Example] (https://github.com/saran13raj/go-pixels/blob/main/examples/main.go)
+## [Complete Example](https://github.com/saran13raj/go-pixels/blob/main/examples/main.go)
 
 ```go
 package main
@@ -114,8 +114,7 @@ import (
 
 func main() {
     imagePath := "tmp/image.png"
-
-	img, err := loadWebP("tmp/parrot.webp")
+    img, err := loadWebP("tmp/parrot.webp")
 
     // Example 1: Halfcell rendering with color
     fmt.Println("=== Halfcell Rendering (Color) ===")
