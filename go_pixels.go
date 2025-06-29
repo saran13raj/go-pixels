@@ -14,22 +14,6 @@ import (
 	_ "image/png"
 )
 
-// loads and decodes an image from a file path.
-func loadImage(path string) (image.Image, error) {
-	file, err := os.Open(path)
-	if err != nil {
-		return nil, err
-	}
-	defer file.Close()
-
-	//
-	img, _, err := image.Decode(file)
-	if err != nil {
-		return nil, fmt.Errorf("%v", err)
-	}
-	return img, nil
-}
-
 // scales the image to the specified width and height.
 func resizeImage(img image.Image, width, height int) image.Image {
 	dst := image.NewRGBA(image.Rect(0, 0, width, height))
@@ -37,12 +21,26 @@ func resizeImage(img image.Image, width, height int) image.Image {
 	return dst
 }
 
-// FromImagePath converts an image to string representation
+// FromImagePath converts an image at the given path to a string representation.
 func FromImagePath(path string, width, height int, renderType string, useColor bool) (string, error) {
-	img, err := loadImage(path)
+	// loads an image from a file path.
+	file, err := os.Open(path)
 	if err != nil {
-		return "", fmt.Errorf("gopixels failed to load content (%v)", err)
+		return "", fmt.Errorf("gopixels failed to open file (%v)", err)
 	}
+	defer file.Close()
+
+	// decode image from loaded file
+	img, _, err := image.Decode(file)
+	if err != nil {
+		return "", fmt.Errorf("%v", err)
+	}
+
+	return FromImageStream(img, width, height, renderType, useColor)
+}
+
+// FromImagePath converts an image to string representation
+func FromImageStream(img image.Image, width, height int, renderType string, useColor bool) (string, error) {
 
 	// Get image dimensions for aspect ratio calculation
 	bounds := img.Bounds()
