@@ -145,7 +145,7 @@ func main() {
 
     // Example 4: Fullcell rendering with grayscale
     fmt.Println("\n=== Fullcell Rendering (Grayscale) ===")
-    output, err = gopixels.FromImageStream(imagePath, 70, 75, "fullcell", false)
+    output, err = gopixels.FromImageStream(img, 70, 75, "fullcell", false)
     if err != nil {
         fmt.Fprintf(os.Stderr, "error: %v\n", err)
         os.Exit(1)

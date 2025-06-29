@@ -39,7 +39,7 @@ func FromImagePath(path string, width, height int, renderType string, useColor b
 	return FromImageStream(img, width, height, renderType, useColor)
 }
 
-// FromImagePath converts an image to string representation
+// FromImageStream converts an image to a string representation
 func FromImageStream(img image.Image, width, height int, renderType string, useColor bool) (string, error) {
 
 	// Get image dimensions for aspect ratio calculation
