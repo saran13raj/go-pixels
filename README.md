@@ -49,7 +49,7 @@ func main() {
 
 Loads an image from the specified file path and converts it to terminal-compatible pixel art.
 
-### `FromImageString(img image.Image, width, height int, renderType string, useColor bool) (string, error)`
+### `FromImageStream(img image.Image, width, height int, renderType string, useColor bool) (string, error)`
 
 Render the pixel art from an image stream with your own decoding.
 
