@@ -1,40 +1,12 @@
-package utils
+package renderer
 
 import (
 	"fmt"
 	"image"
 	"math"
-	"os"
 
 	"image/color"
-	_ "image/jpeg"
-	_ "image/png"
-
-	"golang.org/x/image/draw"
 )
-
-// loads and decodes an image from a file path.
-func LoadImage(path string) (image.Image, error) {
-	file, err := os.Open(path)
-	if err != nil {
-		return nil, err
-	}
-	defer file.Close()
-
-	//
-	img, _, err := image.Decode(file)
-	if err != nil {
-		return nil, fmt.Errorf("%v", err)
-	}
-	return img, nil
-}
-
-// scales the image to the specified width and height.
-func ResizeImage(img image.Image, width, height int) image.Image {
-	dst := image.NewRGBA(image.Rect(0, 0, width, height))
-	draw.NearestNeighbor.Scale(dst, dst.Bounds(), img, img.Bounds(), draw.Over, nil)
-	return dst
-}
 
 // converts an image to grayscale.
 func ToGrayscale(img image.Image) *image.Gray {
