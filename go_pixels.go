@@ -12,7 +12,7 @@ import (
 func FromImagePath(path string, width, height int, renderType string, useColor bool) (string, error) {
 	img, err := utils.LoadImage(path)
 	if err != nil {
-		return "", fmt.Errorf("gopixels failed to load image: %v", err)
+		return "", fmt.Errorf("gopixels failed to load content (%v)", err)
 	}
 
 	// Get image dimensions for aspect ratio calculation
