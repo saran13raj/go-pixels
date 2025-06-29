@@ -49,9 +49,14 @@ func main() {
 
 Loads an image from the specified file path and converts it to terminal-compatible pixel art.
 
+### `FromImageString(img image.Image, width, height int, renderType string, useColor bool) (string, error)`
+
+Render the pixel art from an image stream with your own decoding.
+
 #### Parameters
 
-- **`path`** (string): Path to the image file (supports common formats like PNG, JPEG, GIF)
+- **`path`** (string): Path to the image file (supports common formats like PNG, JPEG, GIF) - for `FromImagePath`
+- **`img`** (image.Image): decoded image - for `FromImageStream`
 - **`width`** (int): Target width in characters (0 = auto-scale)
 - **`height`** (int): Target height in characters (0 = auto-scale)
 - **`renderType`** (string): Rendering mode - `"halfcell"` or `"fullcell"`
@@ -96,7 +101,7 @@ output, err := gopixels.FromImagePath("logo.png", 0, 0, "fullcell", true)
 output, err := gopixels.FromImagePath("image.png", 60, 30, "halfcell", false)
 ```
 
-## Complete Example
+## [Complete Example] (https://github.com/saran13raj/go-pixels/blob/main/examples/main.go)
 
 ```go
 package main
@@ -110,14 +115,11 @@ import (
 func main() {
     imagePath := "tmp/image.png"
 
-    if len(imagePath) < 2 {
-        fmt.Println("gopixels: Invalid image path")
-        os.Exit(1)
-    }
+	img, err := loadWebP("tmp/parrot.webp")
 
     // Example 1: Halfcell rendering with color
     fmt.Println("=== Halfcell Rendering (Color) ===")
-    output, err := gopixels.FromImagePath(imagePath, 50, 55, "halfcell", true)
+	output, err := gopixels.FromImageStream(img, 50, 55, "halfcell", true)
     if err != nil {
         fmt.Fprintf(os.Stderr, "error: %v\n", err)
         os.Exit(1)
@@ -144,7 +146,7 @@ func main() {
 
     // Example 4: Fullcell rendering with grayscale
     fmt.Println("\n=== Fullcell Rendering (Grayscale) ===")
-    output, err = gopixels.FromImagePath(imagePath, 40, 45, "fullcell", false)
+    output, err = gopixels.FromImageStream(imagePath, 70, 75, "fullcell", false)
     if err != nil {
         fmt.Fprintf(os.Stderr, "error: %v\n", err)
         os.Exit(1)
