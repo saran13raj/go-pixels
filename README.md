@@ -6,6 +6,26 @@ A Go library for rendering pixel images directly in the terminal using Unicode b
 <img width="700" src="example.png" />
 </p>
 
+## Table of Contents
+
+- [Features](#features)
+- [Installation](#installation)
+- [Quick Start](#quick-start)
+- [API Reference](#api-reference)
+  - [Functions](#functions)
+  - [Parameters](#parameters)
+  - [Render Types](#render-types)
+  - [Return Values](#return-values)
+- [Usage Examples](#usage-examples)
+  - [Basic Usage](#basic-usage)
+  - [Auto-scaling](#auto-scaling)
+  - [Grayscale Rendering](#grayscale-rendering)
+  - [Complete Example](#complete-example)
+- [Tips](#tips)
+- [Requirements](#requirements)
+- [Contribution](#contribution)
+- [License](#license)
+
 ## Features
 
 - 📸 Load images from file paths
@@ -29,6 +49,7 @@ package main
 import (
     "fmt"
     "os"
+
     gopixels "github.com/saran13raj/go-pixels"
 )
 
@@ -45,13 +66,15 @@ func main() {
 
 ## API Reference
 
-### `FromImagePath(path string, width, height int, renderType string, useColor bool) (string, error)`
+#### Functions
+
+##### `FromImagePath(path string, width, height int, renderType string, useColor bool) (string, error)`
 
 Loads an image from the specified file path and converts it to terminal-compatible pixel art.
 
-### `FromImageStream(img image.Image, width, height int, renderType string, useColor bool) (string, error)`
+##### `FromImageStream(img image.Image, width, height int, renderType string, useColor bool) (string, error)`
 
-Render the pixel art from an image stream with your own decoding.
+Render the pixel art from a pre-decoded image.Image object.
 
 #### Parameters
 
@@ -69,14 +92,14 @@ Render the pixel art from an image stream with your own decoding.
 | `"halfcell"` | Uses half-height Unicode blocks (▀▄) for higher vertical resolution |
 | `"fullcell"` | Uses full-height Unicode blocks (█) for standard resolution         |
 
-#### Returns
+#### Return Values
 
 - **`string`**: The rendered image as a string ready for terminal output
 - **`error`**: Error if image loading or processing fails
 
-## Examples
+## Usage Examples
 
-### Basic Color Rendering
+### Basic Usage
 
 ```go
 // Render with color and specific dimensions
@@ -101,7 +124,9 @@ output, err := gopixels.FromImagePath("logo.png", 0, 0, "fullcell", true)
 output, err := gopixels.FromImagePath("image.png", 60, 30, "halfcell", false)
 ```
 
-## [Complete Example](https://github.com/saran13raj/go-pixels/blob/main/examples/main.go)
+### Complete Example
+
+[Full Code](https://github.com/saran13raj/go-pixels/blob/main/examples/main.go)
 
 ```go
 package main
@@ -109,6 +134,7 @@ package main
 import (
     "fmt"
     "os"
+
     gopixels "github.com/saran13raj/go-pixels"
 )
 
@@ -168,10 +194,10 @@ func main() {
 - Terminal with Unicode support
 - For color mode: Terminal with ANSI color code support
 
+## Contribution
+
+Contributions are welcome! Please feel free to submit issues and pull requests on the [GitHub repository](https://github.com/saran13raj/go-pixels).
+
 ## License
 
 This project is open source. Please check the repository for license information.
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit issues and pull requests on the [GitHub repository](https://github.com/saran13raj/go-pixels).

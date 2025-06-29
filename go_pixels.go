@@ -3,15 +3,15 @@ package gopixels
 import (
 	"fmt"
 	"image"
+	_ "image/gif"
+	_ "image/jpeg"
+	_ "image/png"
 	"os"
 	"strings"
 
 	"github.com/saran13raj/go-pixels/renderer"
 
 	"golang.org/x/image/draw"
-	_ "image/gif"
-	_ "image/jpeg"
-	_ "image/png"
 )
 
 // scales the image to the specified width and height.
